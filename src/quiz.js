@@ -22,7 +22,9 @@ class Quiz {
     return shuffledQuestions;
   }
   checkAnswer(answer) {
-    this.correctAnswers += 1;
+    if (answer === this.questions[this.currentQuestionIndex].answer) {
+      this.correctAnswers += 1;
+    }
   }
 
   hasEnded() {

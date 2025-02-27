@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // End view elements
   const resultContainer = document.querySelector("#result");
+  const restartButton = document.querySelector("restartButton");
 
   /************  SET VISIBILITY OF VIEWS  ************/
 
@@ -153,7 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
 
     const allChoiceElements = document.querySelectorAll("input");
-    console.log(allChoiceElements);
 
     // 2. Loop through all the choice elements and check which one is selected
     // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
@@ -171,6 +171,14 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(selectedAnswer);
 
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
+    // if (selectedAnswer === )
+
+    if (selectedAnswer) {
+      quiz.checkAnswer(selectedAnswer);
+      quiz.moveToNextQuestion();
+      showQuestion();
+    }
+
     // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
     // Move to the next question by calling the quiz method `moveToNextQuestion()`.
     // Show the next question by calling the function `showQuestion()`.
@@ -178,14 +186,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showResults() {
     // YOUR CODE HERE:
-    //
-    // 1. Hide the quiz view (div#quizView)
-    quizView.style.display = "none";
 
-    // 2. Show the end view (div#endView)
-    endView.style.display = "flex";
+    if (quiz.hasEnded() === true) {
+      // 1. Hide the quiz view (div#quizView)
+      quizView.style.display = "none";
+      // 2. Show the end view (div#endView)
+      endView.style.display = "flex";
+      // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
+      resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`;
+    }
+  }
 
-    // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+  restartButton.addEventListener("click", restartQuiz);
+  function restartQuiz() {
+    endView.style.display = "none";
+    quizView.style.display = "block";
+    quiz.currentAnswers = 0;
+    quiz.shuffleQuestions();
+    showQuestion();
   }
 });
