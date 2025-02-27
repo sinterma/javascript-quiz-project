@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // End view elements
   const resultContainer = document.querySelector("#result");
-  const restartButton = document.querySelector("restartButton");
+  const restartButton = document.getElementById("restartButton");
 
   /************  SET VISIBILITY OF VIEWS  ************/
 
@@ -71,7 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
   showQuestion();
 
   /************  TIMER  ************/
-
   let timer;
 
   /************  EVENT LISTENERS  ************/
@@ -201,7 +200,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function restartQuiz() {
     endView.style.display = "none";
     quizView.style.display = "block";
-    quiz.currentAnswers = 0;
+    quiz.currentQuestionIndex = 0;
+    quiz.correctAnswers = 0;
     quiz.shuffleQuestions();
     showQuestion();
   }
